@@ -15,5 +15,3 @@ def get_date(date: Union[str]) -> str:
     """Function for restructuring date"""
 
     return f'{date[8:10]}.{date[5:7]}.{date[0:5]}'
-
-

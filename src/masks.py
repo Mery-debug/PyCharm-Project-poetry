@@ -23,4 +23,3 @@ def get_mask_account(account_number: Union[str]) -> Union[str]:
         return "Ошибка ввода, мало символов"
     else:
         return "Ошибка ввода, много символов"
-
