@@ -1,4 +1,3 @@
-#from src.masks import get_mask_card_number, get_mask_account
 from src.widget import mask_account_card, get_date
 
 print(mask_account_card('Счет 64686473678894779589'))
