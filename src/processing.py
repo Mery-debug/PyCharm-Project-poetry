@@ -1,6 +1,3 @@
-from typing import Union
-
-
 def filter_by_state(list_data: [list[dict]], state="EXECUTED") -> list:
     """Function for search dictionary with some 'state'"""
     list_new_data = []
