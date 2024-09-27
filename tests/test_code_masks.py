@@ -2,13 +2,40 @@ from src.masks import get_mask_card_number, get_mask_account
 import pytest
 
 
-def test_get_mask_card_number_1():
-    assert get_mask_card_number('0000000000000000') == '0000 00** **** 0000'
+@pytest.mark.parametrize('number, expect',
+                         [
+                             ('1234567891234567', '1234 56** **** 4567'),
+                             ('0987654321098765', '0987 65** **** 8765'),
+                             ('6574837462530293', '6574 83** **** 0293')
+                         ]
+                         )
+def test_get_mask_card_number_1(number, expect):
+    """Function for testing 'good' numbers"""
+    assert get_mask_card_number(number) == expect
 
 
-def test_get_mask_card_number_2():
-    assert get_mask_card_number('') == 'Вы ничего не ввели'
+def test_get_mask_card_number_2(lst, short, long):
+    """Function for testing line errors"""
+    assert get_mask_card_number(lst) == 'Вы ничего не ввели'
 
-    assert get_mask_card_number('000000000000') == 'Ошибка ввода, мало символов'
+    assert get_mask_card_number(short) == 'Ошибка ввода, мало символов'
 
-    assert get_mask_card_number('12345678912345678900') == 'Ошибка ввода, много символов'
+    assert get_mask_card_number(long) == 'Ошибка ввода, много символов'
+
+
+@pytest.mark.parametrize('account_number, expect',
+                         [('12345678901234567890', '**7890'),
+                          ('12345123451234512345', '**2345'),
+                          ('12345678900987654321', '**4321')
+                          ])
+def test_mask_account_number(account_number, expect):
+    """Function for testing 'good' account_numbers"""
+    assert get_mask_account(account_number) == expect
+
+
+def test_mask_account_number_2(lst, short, long):
+    assert get_mask_account(lst) == "Вы ничего не ввели"
+
+    assert get_mask_account(short) == "Ошибка ввода, мало символов"
+
+    assert get_mask_account(long) == "Ошибка ввода, много символов"

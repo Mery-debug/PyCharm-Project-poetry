@@ -18,10 +18,11 @@ def get_mask_card_number(number: Union[str]) -> Union[str]:
 
 def get_mask_account(account_number: Union[str]) -> Union[str]:
     """Function for masking bank account"""
-
-    if len(account_number) == 20:
-        return f"**{account_number[16:]}"
-    elif len(account_number) < 20:
-        return "Ошибка ввода, мало символов"
-    else:
-        return "Ошибка ввода, много символов"
+    if account_number != '':
+        if len(account_number) == 20:
+            return f"**{account_number[16:]}"
+        elif len(account_number) < 20:
+            return "Ошибка ввода, мало символов"
+        else:
+            return "Ошибка ввода, много символов"
+    return "Вы ничего не ввели"
