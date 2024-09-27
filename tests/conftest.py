@@ -33,25 +33,5 @@ def expectation():
 
 
 @pytest.fixture
-def dat():
-    return '2024-03-40T02:26:18.671407'
-
-
-@pytest.fixture
-def dat_2():
-    return '2024-20-10T02:26:18.671407'
-
-
-@pytest.fixture
-def res():
-    return 'Некорректная дата'
-
-
-@pytest.fixture
 def data():
     return 'Maestro1596837868705199'
-
-
-@pytest.fixture
-def dat_3():
-    return '2024-20-10T02:26:18.671'
