@@ -1,7 +1,5 @@
-from typing import Union
 
-
-def get_mask_card_number(number: Union[str]) -> Union[str]:
+def get_mask_card_number(number: str) -> str:
     """Function for masking cart number"""
 
     if number != "":
@@ -16,7 +14,7 @@ def get_mask_card_number(number: Union[str]) -> Union[str]:
     return 'Вы ничего не ввели'
 
 
-def get_mask_account(account_number: Union[str]) -> Union[str]:
+def get_mask_account(account_number: str) -> str:
     """Function for masking bank account"""
     if account_number != '':
         if len(account_number) == 20:
