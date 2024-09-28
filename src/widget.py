@@ -18,7 +18,9 @@ def mask_account_card(data: Union[str]) -> str:
 
 def get_date(date: Union[str]) -> str:
     """Function for restructuring date"""
-    if int(date[5:7]) > 12:
+    if date == " " or date == "":
+        return "Некорректная дата"
+    elif int(date[5:7]) > 12:
         return "Некорректная дата"
     elif int(date[8:10]) > 31:
         return "Некорректная дата"

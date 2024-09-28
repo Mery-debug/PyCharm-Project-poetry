@@ -1,4 +1,4 @@
-from typing import Union, Any
+from typing import Union
 
 
 def filter_by_state(list_data: Union[list[dict[str, int]]], state: Union[str] = "EXECUTED") -> list[dict]:
@@ -10,7 +10,7 @@ def filter_by_state(list_data: Union[list[dict[str, int]]], state: Union[str] = 
     return list_new_data
 
 
-def sort_by_date(list_date: Union[list[dict]], sort: Union[bool] = True) -> Any[list[dict], str]:
+def sort_by_date(list_date: Union[list[dict]], sort: Union[bool] = True) -> Union[list[dict], str]:
     """Function for sorting date"""
     for lis in list_date:
         if len(lis["date"]) != 26:
