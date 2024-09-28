@@ -10,11 +10,8 @@ def filter_by_state(list_data: Union[list[dict[str, int]]], state: Union[str] = 
     return list_new_data
 
 
-def sort_by_date(list_date: Union[list[dict]], sort: Union[bool] = True) -> Union[list[dict], str]:
+def sort_by_date(list_date: Union[list[dict]], sort: Union[bool] = True) -> list[dict]:
     """Function for sorting date"""
     for lis in list_date:
-        if len(lis["date"]) != 26:
-            return 'Некорректное значение'
-        else:
-            list_date.sort(key=lambda x: x["date"], reverse=sort)
-            return list_date
+        list_date.sort(key=lambda x: x["date"], reverse=sort)
+    return list_date

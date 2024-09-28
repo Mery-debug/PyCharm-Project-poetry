@@ -1,6 +1,6 @@
 from typing import Union
 
-from src.processing import sort_by_date
+from src.processing import filter_by_state, sort_by_date
 
 
 def test_sort_by_date(list_date: Union[list[dict]], expectation: Union[list[dict]]) -> None:
@@ -8,5 +8,9 @@ def test_sort_by_date(list_date: Union[list[dict]], expectation: Union[list[dict
     assert sort_by_date(list_date) == expectation
 
 
-def test_sort_by_date_2(list_date_2: Union[list[dict]], expectation: Union[list[dict]]) -> None:
-    assert sort_by_date(list_date_2) == 'Некорректное значение'
+def test_filter_by_state(list_dat: Union[list[dict]], stat: Union[str], exp: Union[list[dict]]) -> None:
+    assert filter_by_state(list_dat, stat) == exp
+
+
+def test_fil_by_st(list_dat: Union[list[dict]], stat_2: Union[str], exp_2: Union[list[dict]]) -> None:
+    assert filter_by_state(list_dat, stat_2) == exp_2
