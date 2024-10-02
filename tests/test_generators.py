@@ -1,4 +1,4 @@
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 import pytest
 
@@ -13,3 +13,19 @@ def test_transaction_descriptions(transaction: list[dict], expectati: str, expec
     i = transaction_descriptions(transaction)
     assert next(i) == expectati
     assert next(i) == expectation_2
+
+
+@pytest.mark.parametrize("start, stop, expec", [(1, 6, "0000 0000 0000 0001")])
+def test_card_number_generation(start, stop, expec):
+    o = card_number_generator(start, stop)
+    assert next(o) == expec
+
+
+# test 2
+    o = card_number_generator(1, 6)
+    print(next(o))
+    print(next(o))
+    print(next(o))
+    print(next(o))
+    print(next(o))
+    print(next(o))
