@@ -21,11 +21,4 @@ def test_card_number_generation(start, stop, expec):
     assert next(o) == expec
 
 
-# test 2
-    o = card_number_generator(1, 6)
-    print(next(o))
-    print(next(o))
-    print(next(o))
-    print(next(o))
-    print(next(o))
-    print(next(o))
+

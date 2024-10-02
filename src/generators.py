@@ -1,10 +1,16 @@
 from typing import Union
 
 
-def filter_by_currency(transactions: list[dict], val: Union[str] ="USD") -> dict:
-    for i in range(0, len(transactions) + 1):
-        if transactions[i]["operationAmount"]["currency"]["name"] == val:
-            yield transactions[i]
+def filter_by_currency(transactions: list[dict], val: Union[str] ="USD"):
+    try:
+        for i in range(0, len(transactions) + 1):
+            try:
+                if transactions[i]["operationAmount"]["currency"]["name"] == val:
+                    yield transactions[i]
+            except IndexError or StopIteration:
+                print("Количество итераций закончилось")
+    except KeyError:
+        yield f"Вы пытаетесь обработать пустой словарь"
 
 
 def transaction_descriptions(transactions: list[dict]) -> str:
