@@ -2,6 +2,7 @@ from typing import Union
 
 
 def filter_by_currency(transactions: list[dict], val: Union[str] ="USD"):
+    """Function for filter list of dict by currency"""
     try:
         for i in range(len(transactions) + 1):
             if transactions[i]["operationAmount"]["currency"]["name"] == val:
@@ -13,6 +14,7 @@ def filter_by_currency(transactions: list[dict], val: Union[str] ="USD"):
 
 
 def transaction_descriptions(transactions: list[dict]) -> str:
+    """Function for description transaction"""
     for transaction in transactions:
         if transaction != {}:
             result = transaction['description']
@@ -22,6 +24,7 @@ def transaction_descriptions(transactions: list[dict]) -> str:
 
 
 def card_number_generator(start: int, finish: int):
+    """Function for cart number generation"""
     if start < 1 or finish > 9999999999999999:
         yield f"Ошибка ввода, недопустимый диапазон"
     else:

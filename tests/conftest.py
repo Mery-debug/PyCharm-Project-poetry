@@ -160,21 +160,25 @@ def transaction_11() -> list[dict]:
 
 @pytest.fixture
 def exp_3() -> str:
+    """Ожидаемое значение при попытке обработать пустой словарь"""
     return "Вы пытаетесь обработать пустой словарь"
 
 
 @pytest.fixture
 def val() -> str:
+    """Необязательный параметр state, краткое название валюты в которой производится операция"""
     return "USD"
 
 
 @pytest.fixture
 def val_2() -> str:
+    """ Необязательный параметр state, краткое название валюты в которой производится операция"""
     return "EUR"
 
 
 @pytest.fixture
 def exp() -> dict:
+    """Ожидаемое значение после выполнения функции в виде словаря"""
     return {
           "id": 939719570,
           "state": "EXECUTED",
@@ -196,6 +200,7 @@ def exp() -> dict:
 
 @pytest.fixture
 def exp_2() -> dict:
+    """Ожидаемое значение после выполнения функции в виде словаря"""
     return {
               "id": 142264268,
               "state": "EXECUTED",
@@ -217,6 +222,7 @@ def exp_2() -> dict:
 
 @pytest.fixture
 def expectati() -> str:
+
     return "Перевод организации"
 
 
