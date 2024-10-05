@@ -3,21 +3,25 @@ import pytest
 
 @pytest.fixture
 def lst() -> str:
+    """Пустая строка для проверки функции маскирования"""
     return ""
 
 
 @pytest.fixture
 def short() -> str:
+    """Строка для проверки работы функции маскирования сокращенная"""
     return "123456789"
 
 
 @pytest.fixture
 def long() -> str:
+    """Строка для проверки работы функции маскирования"""
     return "123456789123456789000000"
 
 
 @pytest.fixture
 def list_date() -> list[dict]:
+    """Список словарей для сортировки по дате несортированный"""
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -28,6 +32,7 @@ def list_date() -> list[dict]:
 
 @pytest.fixture
 def expectation() -> list[dict]:
+    """Список словарей передаваемый в функцию для сортировки по дате по убыванию, отсортированый"""
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
@@ -38,6 +43,7 @@ def expectation() -> list[dict]:
 
 @pytest.fixture
 def list_date_2() -> list[dict]:
+    """Список словарей отсортированных по дате по убыванию с неверными форматами даты"""
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:3"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06T02:08:58.425572"},
@@ -48,6 +54,7 @@ def list_date_2() -> list[dict]:
 
 @pytest.fixture
 def list_dat() -> list[dict]:
+    """Список словарей передаваемых в функцию для сортировки по дате"""
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -58,6 +65,7 @@ def list_dat() -> list[dict]:
 
 @pytest.fixture
 def result() -> list[dict]:
+    """Ожидаемый результат работы функции по поиску необходимых словарей в списке"""
     return [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -66,6 +74,7 @@ def result() -> list[dict]:
 
 @pytest.fixture
 def result_2() -> list[dict]:
+    """Ожидаемый результат работы функции по поиску необходимых словарей в списке"""
     return [
         {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
         {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
@@ -74,16 +83,19 @@ def result_2() -> list[dict]:
 
 @pytest.fixture
 def stat() -> str:
+    """Значение параметра state необходимое для поиска по словарям"""
     return "EXECUTED"
 
 
 @pytest.fixture
 def stat_2() -> str:
+    """Параметр state необходимый для поиска необходимых словарей"""
     return "CANCELED"
 
 
 @pytest.fixture
 def transaction_1() -> list[dict]:
+    """Список словарей, передаваемый в функцию"""
     return [{
           "id": 939719570,
           "state": "EXECUTED",
@@ -122,6 +134,7 @@ def transaction_1() -> list[dict]:
 
 @pytest.fixture
 def transaction_11() -> list[dict]:
+    """Список словарей передаваемый как входной словарь в функцию с пустым словарем"""
     return [{
           "id": 939719570,
           "state": "EXECUTED",
@@ -222,41 +235,50 @@ def exp_2() -> dict:
 
 @pytest.fixture
 def expectati() -> str:
-
+    """Ожидаемый результат выполнения функции в виде строки"""
     return "Перевод организации"
 
 
 @pytest.fixture
 def expectation_2() -> str:
+    """Ожидаемый результат выполнения функции в виде строки"""
     return "Перевод со счета на счет"
 
 
 @pytest.fixture
 def expec_2() -> str:
+    """Ожидаемый результат вывода функции в виде строки (для генератора номера карты)"""
     return "0000 0000 0000 0002"
 
 
 @pytest.fixture
 def start() -> int:
+    """Число передаваемое в параметр для генератора номера карты в диапазоне"""
     return 2
 
 
 @pytest.fixture
 def stop() -> int:
+    """Число передаваемое в параметр для генерации номера карты в диапазоне"""
     return 3
 
 
 @pytest.fixture
 def lst_null() -> list[dict]:
+    """Возвращаемый пустой список словарей для проверки работы exception"""
     return [{}]
 
 @pytest.fixture
 def start_min() -> int:
+    """Число для проверки ограничения диапазона"""
     return 0
 
 
 @pytest.fixture
 def stop_max() -> int:
+    """Число для проверки диапазона, больше максимально заданного в функции"""
     return 10000000000000000
 
 
+@pytest.fixture
+def
