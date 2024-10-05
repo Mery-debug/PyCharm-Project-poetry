@@ -1,16 +1,16 @@
-from typing import Union, Any
+from typing import Any
 
 from functools import wraps
 
-from typing import
+# from typing import
 
 
-def log(filename: Union[str] = "file") -> None:
+def log(filename=None) -> Any:
     """Декоратор логирующий функции"""
-    def wrapper(func: Any) -> Any:
+    def wrapper(func) -> Any:
         @wraps(func)
         def inner(*args, **kwargs) -> Any:
-            if filename == "file":
+            if filename:
                 try:
                     with open("log.txt", "r+", encoding='utf-8') as file:
                         file.write(f"Начало работы функции")
@@ -20,12 +20,12 @@ def log(filename: Union[str] = "file") -> None:
                         file.write(f"Конец работы функции")
                 except TypeError:
                     print("Ошибка типа данных")
-            elif filename == "log":
-                print(f"Начало работы функции")
-                print(f" Документация функции: {func.__doc__}")
+            elif not filename:
+                print(f"\nНачало работы функции")
+                print(f" \nДокументация функции: {func.__doc__}")
                 start = func(*args, **kwargs)
-                print(f"Результат работы функции: {start}")
-                print(f"Конец работы функции")
-                return start
-            return inner
-        return wrapper
+                print(f"\nРезультат работы функции: {start}")
+                print(f"\nКонец работы функции")
+            return start
+        return inner
+    return wrapper
