@@ -2,8 +2,11 @@ from typing import Union, Any
 
 from functools import wraps
 
+from typing import
 
-def log(filename: Union[str] = "file") -> Any:
+
+def log(filename: Union[str] = "file") -> None:
+    """Декоратор логирующий функции"""
     def wrapper(func: Any) -> Any:
         @wraps(func)
         def inner(*args, **kwargs) -> Any:
