@@ -8,12 +8,15 @@ def log(filename: Union[str] = "file") -> Any:
         @wraps(func)
         def inner(*args, **kwargs) -> Any:
             if filename == "file":
-                with open("log.txt", "r+", encoding='utf-8') as file:
-                    file.write(f"Начало работы функции")
-                    file.write(f"Документация функции: {func.__doc__}")
-                    start = func(*args, **kwargs)
-                    file.write(f"Результат работы функции: {start}")
-                    file.write(f"Конец работы функции")
+                try:
+                    with open("log.txt", "r+", encoding='utf-8') as file:
+                        file.write(f"Начало работы функции")
+                        file.write(f"Документация функции: {func.__doc__}")
+                        start = func(*args, **kwargs)
+                        file.write(f"Результат работы функции: {start}")
+                        file.write(f"Конец работы функции")
+                except TypeError:
+                    print("Ошибка типа данных")
             elif filename == "log":
                 print(f"Начало работы функции")
                 print(f" Документация функции: {func.__doc__}")
