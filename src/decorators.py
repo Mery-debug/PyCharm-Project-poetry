@@ -11,21 +11,24 @@ def log(filename=None) -> Any:
         @wraps(func)
         def inner(*args, **kwargs) -> Any:
             if filename:
-                try:
-                    with open("log.txt", "r+", encoding='utf-8') as file:
-                        file.write(f"Начало работы функции")
-                        file.write(f"Документация функции: {func.__doc__}")
+                with open("log.txt", "a", encoding='utf-8') as file:
+                    try:
+                        file.write(f"\nНачало работы функции {func.__name__}")
+                        file.write(f"\nДокументация функции: {func.__doc__}")
                         start = func(*args, **kwargs)
-                        file.write(f"Результат работы функции: {start}")
-                        file.write(f"Конец работы функции")
-                except TypeError:
-                    print("Ошибка типа данных")
+                        file.write(f"\nРезультат работы функции: {start}")
+                        file.write(f"\nКонец работы функции")
+                    except TypeError:
+                        return f"Данные об ошибке: TypeError, неверный формат параметров\nКонец работы функции"
             elif not filename:
-                print(f"\nНачало работы функции")
-                print(f" \nДокументация функции: {func.__doc__}")
-                start = func(*args, **kwargs)
-                print(f"\nРезультат работы функции: {start}")
-                print(f"\nКонец работы функции")
-            return start
+                try:
+                    print(f"\nНачало работы функции")
+                    print(f"\nДокументация функции: {func.__doc__}")
+                    start = func(*args, **kwargs)
+                    print(f"\nРезультат работы функции: {start}")
+                    print(f"\nКонец работы функции")
+                except TypeError:
+                    return "Данные об ошибке: TypeError, неверный формат параметров"
+                return start
         return inner
     return wrapper
