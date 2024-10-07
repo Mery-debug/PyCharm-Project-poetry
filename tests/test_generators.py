@@ -1,6 +1,6 @@
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
-
 import pytest
+
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 def test_filter_by_currency(transaction_11: list[dict], val: str, exp: dict, exp_2: dict, exp_3: str) -> None:
@@ -35,4 +35,3 @@ def test_card_number_generation(start: int, stop: int, expec: str) -> None:
 def test_card_number_generation_2(start_min: int, stop_max: int) -> None:
     o_2 = card_number_generator(start_min, stop_max)
     assert next(o_2) == "Ошибка ввода, недопустимый диапазон"
-

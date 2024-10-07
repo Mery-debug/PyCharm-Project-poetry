@@ -1,4 +1,3 @@
-
 def get_mask_card_number(number: str) -> str:
     """Function for masking cart number"""
 
@@ -11,12 +10,12 @@ def get_mask_card_number(number: str) -> str:
             return "Ошибка ввода, мало символов"
         else:
             return "Ошибка ввода, много символов"
-    return 'Вы ничего не ввели'
+    return "Вы ничего не ввели"
 
 
 def get_mask_account(account_number: str) -> str:
     """Function for masking bank account"""
-    if account_number != '':
+    if account_number != "":
         if len(account_number) == 20:
             return f"**{account_number[16:]}"
         elif len(account_number) < 20:
