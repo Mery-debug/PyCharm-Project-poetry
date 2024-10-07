@@ -1,13 +1,13 @@
-from src.masks import get_mask_account, get_mask_card_number
-
 from typing import Union
+
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(data: Union[str]) -> str:
     """Function for masking cart or bank account"""
-    if data == '':
+    if data == "":
         return "Ошибка ввода, мало символов"
-    elif ' ' not in data:
+    elif " " not in data:
         return "Не верный формат ввода"
     else:
         if "Счет" in data:
