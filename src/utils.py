@@ -1,18 +1,17 @@
-from typing import Any
+from typing import Union
 import os
 import json
 
 
-# path_1 = "data/operations.json"
-
-def load_transactions(file_path):
+def load_transactions(file_path: str) -> Union[dict, list]:
+    """Function take json return list or dict with transaction"""
     if not os.path.exists(file_path):
         return []
 
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as json_file:
         try:
             data = json.load(json_file)
-            if isinstance(data, list):
+            if type(data) == list:
                 return data
             else:
                 return []
