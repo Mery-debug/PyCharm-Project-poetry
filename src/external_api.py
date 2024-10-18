@@ -16,7 +16,7 @@ def return_cash(transactions: dict) -> Union[float, str]:
         if status_code == 200:
             try:
                 respo = response.json()
-                return respo.loads()["rates"]["RUB"]
+                return respo.loads()["rates"]["RUB"] * transactions['code']
             except Exception:
                 return f"Ошибка номер {status_code}"
     elif transactions['code'] == 'EUR':
@@ -24,7 +24,7 @@ def return_cash(transactions: dict) -> Union[float, str]:
         if status_code == 200:
             try:
                 respo = response.json()
-                return respo.loads()["rates"]["RUB"]
+                return respo.loads()["rates"]["RUB"] * transactions['code']
             except Exception:
                 return f"Ошибка номер {status_code}"
     return transactions['amount']
