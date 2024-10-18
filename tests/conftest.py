@@ -236,3 +236,14 @@ def start_min() -> int:
 def stop_max() -> int:
     """Число для проверки диапазона, больше максимально заданного в функции"""
     return 10000000000000000
+
+
+@pytest.fixture
+def final_path() -> str:
+    """Возвращает строку"""
+    return "data/operations.json"
+
+@pytest.fixture
+def final_p() -> str:
+    """Возвращает строку"""
+    return "../data/operations.json"
