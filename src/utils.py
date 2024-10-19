@@ -12,10 +12,8 @@ def load_transactions(file_path: str) -> Union[dict, list]:
             data = json.load(json_file)
             if type(data) == list:
                 return data
-            else:
-                return []
         except json.JSONDecodeError:
             return []
 
 
-print(load_transactions("../data/operations.json"))
+print(load_transactions(os.path.join(os.path.abspath(__file__), "../../data/operations.json")))

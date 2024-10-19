@@ -1,8 +1,5 @@
-from unittest.mock import Mock
-from typing import Any
 from src.utils import load_transactions
-import json
-
+from unittest.mock import Mock
 
 
 def test_load_transactions(final_path: str) -> None:
@@ -10,11 +7,11 @@ def test_load_transactions(final_path: str) -> None:
     assert load_transactions(final_path) == []
 
 
-def test_load_trans(final_p: str) -> None:
+def test_load_trans(final_p: str, trial: list) -> None:
     """Тест при правильной работе функции"""
-    with open(final_p, 'r', encoding='utf-8', errors='ignore') as json_file:
-        data = json.load(json_file)
-    assert load_transactions(final_p) == data
+    assert load_transactions(final_p) == trial
 
 
-def test_load() -> None:
+def test_load(final: str) -> None:
+    """Отлов ошибки JSONDecodeError"""
+    assert load_transactions(final) == []

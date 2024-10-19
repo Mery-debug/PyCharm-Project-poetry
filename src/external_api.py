@@ -30,3 +30,4 @@ def return_cash(transactions: dict) -> Union[float, str]:
     return transactions['amount']
 
 
+print(return_cash())
