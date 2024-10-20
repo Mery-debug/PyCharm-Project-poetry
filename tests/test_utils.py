@@ -15,3 +15,10 @@ def test_load_trans(final_p: str, trial: list) -> None:
 def test_load(final: str) -> None:
     """Отлов ошибки JSONDecodeError"""
     assert load_transactions(final) == []
+
+
+def test_lo(triang: str) -> None:
+    """Проверка, что тип не list"""
+    with open(triang, "w", encoding='utf-8') as json_file:
+        json_file.write('{"id": 441945886, "state": "EXECUTED", "date": "2019-08-26T10:50:58.294041", "operationAmount": { "amount": "31957.58", "currency": { "name": "руб.", "code": "RUB" }')
+        assert load_transactions(triang) == []

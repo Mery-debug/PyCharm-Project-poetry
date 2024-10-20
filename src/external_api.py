@@ -4,34 +4,30 @@ from dotenv import load_dotenv
 from typing import Union
 
 
-load_dotenv('.env')
-api_key = os.getenv('API_KEY')
-
-
 def return_cash(transactions: dict) -> Union[float, str]:
+    """Function take dict transaction and return amount in RUB only"""
+    load_dotenv()
+    amount_tr = transactions['operationAmount']['amount']
     transaction = transactions['operationAmount']['currency']['code']
-    url_1 = f"https://api.apilayer.com/exchangerates_data/latest?symbols=Rub&base={transaction}"
-    response = requests.get(url_1, headers=api_key)
-    if transaction == 'USD':
-        status_code = response.status_code
-        if status_code == 200:
-            try:
-                respo = response.json()
-                return respo.loads()["rates"]["RUB"] * transaction
-            except Exception:
-                return f"Ошибка номер {status_code}"
-    elif transaction == 'EUR':
-        status_code = response.status_code
-        if status_code == 200:
-            try:
-                respo = response.json()
-                return respo.loads()["rates"]["RUB"] * transaction
-            except Exception:
-                return f"Ошибка номер {status_code}"
+    api_key = os.getenv("API_KEY")
+    url = f"https://api.apilayer.com/exchangerates_data/convert?to={transaction}&from=EUR&amount={amount_tr}"
+    payload = {}
+    headers = {
+        "apikey": f"{api_key}"
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+    if response.status_code == 200:
+        if transaction == 'EUR':
+            return response.json()["result"] * float(amount_tr)
+        elif transaction == 'USD':
+            return response.json()["result"] * float(amount_tr)
+        else:
+            return response.json()["result"]
     else:
-        return transactions['operationAmount']['amount']
+        return f"Возможная причина {response.reason}"
 
 
-print(return_cash({'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount':
-    {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}},
-    'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}))
+print(return_cash({'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}}, 'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}))
+
+
+
