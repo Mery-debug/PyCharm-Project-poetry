@@ -10,7 +10,7 @@ def return_cash(transactions: dict) -> Union[float, str]:
     amount_tr = transactions['operationAmount']['amount']
     transaction = transactions['operationAmount']['currency']['code']
     api_key = os.getenv("API_KEY")
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to={transaction}&from=EUR&amount={amount_tr}"
+    url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={transaction}&amount={amount_tr}"
     payload = {}
     headers = {
         "apikey": f"{api_key}"
@@ -18,11 +18,11 @@ def return_cash(transactions: dict) -> Union[float, str]:
     response = requests.request("GET", url, headers=headers, data=payload)
     if response.status_code == 200:
         if transaction == 'EUR':
-            return response.json()["result"] * float(amount_tr)
+            return round(response.json()["result"], 2)
         elif transaction == 'USD':
-            return response.json()["result"] * float(amount_tr)
+            return round(response.json()["result"], 2)
         else:
-            return response.json()["result"]
+            return amount_tr
     else:
         return f"Возможная причина {response.reason}"
 
