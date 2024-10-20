@@ -17,9 +17,7 @@ def return_cash(transactions: dict) -> Union[float, str]:
     }
     response = requests.request("GET", url, headers=headers, data=payload)
     if response.status_code == 200:
-        if transaction == 'EUR':
-            return round(response.json()["result"], 2)
-        elif transaction == 'USD':
+        if transaction in ['EUR', 'USD']:
             return round(response.json()["result"], 2)
         else:
             return amount_tr
@@ -27,7 +25,7 @@ def return_cash(transactions: dict) -> Union[float, str]:
         return f"Возможная причина {response.reason}"
 
 
-print(return_cash({'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}}, 'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}))
+# print(return_cash({'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}}, 'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}))
 
 
 
