@@ -1,18 +1,35 @@
 from unittest.mock import patch, Mock
 from src.external_api import return_cash
-import requests
-from typing import Any
 
 
 @patch('src.external_api.requests.request')
-def test_return_cash(transaction: dict) -> None:
+def test_return_cash(transaction, mock_get) -> None:
     """Test of working func with error (status_code != 200)"""
-    mock_response = Mock()
-    requests.request = mock_response
-    transaction = {
-        'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041',
-        'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}},
-        'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'
-                  }
-    mock_response.return_value.status_code = 200
-    assert return_cash(transaction) == 31957.58
+    mock_get.return_value.json.return_value = {"date": "2024-10-20",
+                                               "info": {"rate": 104.205462, "timestamp": 1729464905},
+                                               "query": {"amount": 31957.58, "from": "EUR", "to": "RUB"},
+                                               "result": 3724.305775, "success": True}
+    mock_get.return_value.status_code = 200
+    assert return_cash(amount=25, from_currency="USD", to_currency="RUB") == 3724.31
+
+
+@patch('src.external_api.requests.request')
+def test_return_cash1(transaction, mock_get) -> None:
+    """Test of working func with error (status_code != 200)"""
+    mock_get.return_value.json.return_value = {"date": "2024-10-20",
+                                               "info": {"rate": 104.205462, "timestamp": 1729464905},
+                                               "query": {"amount": 31957.58, "from": "RUB", "to": "RUB"},
+                                               "result": 3724.305775, "success": True}
+    mock_get.return_value.status_code = 200
+    assert return_cash(amount=25, from_currency="RUB", to_currency="RUB") == 25
+
+
+@patch('src.external_api.requests.request')
+def test_return_cash2(transaction, mock_get) -> None:
+    """Test of working func with error (status_code != 200)"""
+    mock_get.return_value.json.return_value = {"date": "2024-10-20",
+                                               "info": {"rate": 104.205462, "timestamp": 1729464905},
+                                               "query": {"amount": 31957.58, "from": "EUR", "to": "RUB"},
+                                               "result": 3724.305775, "success": True}
+    mock_get.return_value.status_code = 404
+    assert return_cash(amount=25, from_currency="USD", to_currency="RUB") == f"Возможная причина {mock_get().reason}"

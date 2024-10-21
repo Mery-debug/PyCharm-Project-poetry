@@ -272,9 +272,9 @@ def triang() -> str:
     return os.path.join(os.path.abspath(__file__), "../../data/test.json")
 
 
-# @pytest.fixture
-# def transaction() -> dict:
-#     return {'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}}, 'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}
+@pytest.fixture
+def transaction() -> dict:
+    return {'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}}, 'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}
 
 
 @pytest.fixture
@@ -283,7 +283,8 @@ def trans() -> dict:
 
 
 @pytest.fixture
-def mock_requests() -> Any:
+def mock_get() -> Any:
     """Fixture mock_requests, change requests.request on mock"""
-    mock_requests = Mock(return_value=trans)
-    return mock_requests
+    requests.get = Mock()
+    mock_get = requests.get
+    return mock_get

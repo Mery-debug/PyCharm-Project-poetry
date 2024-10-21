@@ -4,28 +4,26 @@ from dotenv import load_dotenv
 from typing import Union
 
 
-def return_cash(transactions: dict) -> Union[float, str]:
+def return_cash(amount: Union[int, str], from_currency: str, to_currency: str) -> Union[float, str]:
     """Function take dict transaction and return amount in RUB only"""
     load_dotenv()
-    amount_tr = transactions['operationAmount']['amount']
-    transaction = transactions['operationAmount']['currency']['code']
+    # amount_tr = transactions['operationAmount']['amount']
+    # transaction = transactions['operationAmount']['currency']['code']
     api_key = os.getenv("API_KEY")
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={transaction}&amount={amount_tr}"
-    payload = {}
+    url = f"https://api.apilayer.com/exchangerates_data/convert?to={to_currency}&from={from_currency}&amount={amount}"
     headers = {
         "apikey": f"{api_key}"
     }
-    response = requests.request("GET", url, headers=headers, data=payload)
+    response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        if transaction in ['EUR', 'USD']:
+        if from_currency in ['EUR', 'USD']:
             return round(response.json()["result"], 2)
         else:
-            return amount_tr
+            return amount
     else:
         return f"Возможная причина {response.reason}"
 
 
-# print(return_cash({'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:50:58.294041', 'operationAmount': {'amount': '31957.58', 'currency': {'name': 'руб.', 'code': 'EUR'}}, 'description': 'Перевод организации', 'from': 'Maestro 1596837868705199', 'to': 'Счет 64686473678894779589'}))
-
+# print(return_cash())
 
 
