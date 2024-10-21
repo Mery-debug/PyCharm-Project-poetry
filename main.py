@@ -1,18 +1,18 @@
-# from src.processing import filter_by_state, sort_by_date
-# from src.widget import get_date
-
-
+# from src.masks import get_mask_card_number, get_mask_account
+# from src.save_to_file import save_to_file
+# import os
 #
-# print(filter_by_state([{'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-#                     {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-#                     {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]))
 #
-# print(sort_by_date([{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-#                     {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-#                     {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-#                     {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]))
-#
-# print(get_date('2024-03-11T02:26:18.671407'))
+# def main():
+#     number = input("Введите номер карты: ")
+#     file_path_2 = input("Введите путь к файл, в который хотите сохранять логи: ")
+#     account_number = input("Введите номер счета: ")
+#     file_path = os.path.join(os.path.abspath(__file__), file_path_2)
+#     get_mask_card_number(number)
+#     get_mask_account(account_number)
+#     save_to_file(number, file_path)
 
 
+if __name__ == '__main__':
+    main()
 

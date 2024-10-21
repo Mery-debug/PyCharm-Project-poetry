@@ -11,7 +11,7 @@ def log(filename: Union[None, str] = None) -> Any:
         @wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Any:
             if filename:
-                with open("log.txt", "a", encoding="utf-8") as file:
+                with open("logs.txt", "a", encoding="utf-8") as file:
                     try:
                         file.write(f"\nНачало работы функции {func.__name__}")
                         file.write(f"\nДокументация функции: {func.__doc__}")
