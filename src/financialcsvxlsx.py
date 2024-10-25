@@ -58,38 +58,3 @@ def xlsx_reader(file_name: [str] = "../data/transactions_excel.xlsx") -> list[di
 
 # print(xlsx_reader("../data/transactions_excel.xlsx"))
 # print(csv_reader("../data/transactions.csv"))
-
-
-
-
-
-
-def reader_file_transaction_excel(excel_path):
-    """Функция принимает путь до excel-файла и возвращает список словарей с данными о финансовых транзакциях"""
-    try:
-        transaction_df = pd.read_excel(excel_path)
-        transaction_list = []
-        for index, row in transaction_df.iterrows():
-            transaction_list.append(
-                {
-                    "id": str(row["id"]),
-                    "state": row["state"],
-                    "date": row["date"],
-                    "operationAmount": {
-                        "amount": str(row["amount"]),
-                        "currency": {
-                            "name": row["currency_name"],
-                            "code": row["currency_code"],
-                        },
-                    },
-                    "description": row["description"],
-                    "from": row["from"],
-                    "to": row["to"],
-                }
-            )
-    except Exception as e:
-        print(f"Error reading Excel: {e}")
-        return []
-    return transaction_list
-
-
