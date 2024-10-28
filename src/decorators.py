@@ -1,8 +1,6 @@
 from functools import wraps
 from typing import Any, Union
 
-# from typing import
-
 
 def log(filename: Union[None, str] = None) -> Any:
     """Декоратор логирующий функции"""
