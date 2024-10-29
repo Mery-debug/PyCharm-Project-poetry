@@ -48,7 +48,7 @@ def status() -> str:
         return s
 
 
-def ad_questions() -> Any:
+def ad_questions() -> list:
     """Функция, задающая дополнительные вопросы"""
     a = 0
     b = 0
@@ -74,4 +74,4 @@ def ad_questions() -> Any:
         d = 1
     elif user_6.lower() == 'нет':
         d = 2
-    return a, b, c, d
+    return [a, b, c, d]
