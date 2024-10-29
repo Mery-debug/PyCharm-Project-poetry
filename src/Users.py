@@ -72,6 +72,8 @@ def ad_questions() -> list:
         c = 2
     if user_6.lower() == 'да':
         d = 1
+        user_7 = input('Напишите слово для сортировки: ')
+        return [a, b, c, d, user_7]
     elif user_6.lower() == 'нет':
         d = 2
     return [a, b, c, d]
