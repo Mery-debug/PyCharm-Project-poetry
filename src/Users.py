@@ -72,68 +72,61 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
     if user_3.lower() == 'да':
         if user_4.lower() == 'по возрастанию':
             sort_to_date = []
-            for modul_tr in modul_transaction:
-                sort = sort_by_date(modul_tr['date'], sorte=True)
-                for sor in sort:
-                    sort_to_date.append(sor)
-                    if user_5.lower() == 'да':
-                        sort_to_rub = []
-                        for sort in sort_to_date:
-                            if sort['operationAmount']['currency']['code'] == "RUB":
-                                sort_to_rub.append(sort)
-                                if user_6.lower() == 'да':
-                                    user_7 = input('Напишите слово для сортировки: ')
-                                    final = transaction_search(sort_to_rub, user_7)
-                                elif user_6.lower() == 'нет':
-                                    final = sort_to_rub
-                    elif user_5.lower() == 'нет':
-                        sort_to_rub = sort_to_date
-                        if user_6.lower() == 'да':
-                            user_7 = input('Напишите слово для сортировки: ')
-                            final = transaction_search(sort_to_rub, user_7)
-                        elif user_6.lower() == 'нет':
-                            final = sort_to_rub
+            sort = sort_by_date(modul_transaction, sorte=True)
+            for sor in sort:
+                sort_to_date.append(sor)
+                if user_5.lower() == 'да':
+                    sort_to_rub = []
+                    for sort in sort_to_date:
+                        if sort['operationAmount']['currency']['code'] == "RUB":
+                            sort_to_rub.append(sort)
+                    if user_6.lower() == 'да':
+                        final = sorted(sort.get("id"), key=lambda item: item[1])
+                    elif user_6.lower() == 'нет':
+                        final = sort_to_rub
+                elif user_5.lower() == 'нет':
+                    sort_to_rub = sort_to_date
+                    if user_6.lower() == 'да':
+                        final = sorted(sort.get("id"), key=lambda item: item[1])
+                    elif user_6.lower() == 'нет':
+                        final = sort_to_rub
         elif user_4.lower() == 'по убыванию':
             sort_to_date = []
-            for modul_tr in modul_transaction:
-                sort = sort_by_date(modul_tr['date'], sorte=False)
-                for sor in sort:
-                    sort_to_date.append(sor)
-                    if user_5.lower() == 'да':
-                        sort_to_rub = []
-                        for sort in sort_to_date:
-                            if sort['operationAmount']['currency']['code'] == "RUB":
-                                sort_to_rub.append(sort)
-                                if user_6.lower() == 'да':
-                                    user_7 = input('Напишите слово для сортировки: ')
-                                    final = transaction_search(sort_to_rub, user_7)
-                                elif user_6.lower() == 'нет':
-                                    final = sort_to_rub
-                    elif user_5.lower() == 'нет':
-                        sort_to_rub = sort_to_date
-                        if user_6.lower() == 'да':
-                            user_7 = input('Напишите слово для сортировки: ')
-                            final = transaction_search(sort_to_rub, user_7)
-                        elif user_6.lower() == 'нет':
-                            final = sort_to_rub
+            sort = sort_by_date(modul_transaction, sorte=False)
+            for sor in sort:
+                sort_to_date.append(sor)
+                if user_5.lower() == 'да':
+                    sort_to_rub = []
+                    for sort in sort_to_date:
+                        if sort['operationAmount']['currency']['code'] == "RUB":
+                            sort_to_rub.append(sort)
+                            if user_6.lower() == 'да':
+                                final = sorted(sort.get("id"), key=lambda item: item[1])
+                            elif user_6.lower() == 'нет':
+                                final = sort_to_rub
+                elif user_5.lower() == 'нет':
+                    sort_to_rub = sort_to_date
+                    if user_6.lower() == 'да':
+                        final = sorted(sort.get("id"), key=lambda item: item[1])
+                    elif user_6.lower() == 'нет':
+                        final = sort_to_rub
     elif user_3.lower() == 'нет':
         if user_5.lower() == 'да':
-            sort_to_rub = []
-            for modul_tr in modul_transaction:
-                if modul_tr['operationAmount']['currency']['code'] == "RUB":
-                    sort_to_rub.append(modul_tr)
+            sort_to_rub = modul_transaction
+            for sor in sort_to_rub:
+                if sor['operationAmount']['currency']['code'] == "RUB":
+                    sort_to_rub.append(sor)
                     if user_6.lower() == 'да':
-                        user_7 = input('Напишите слово для сортировки: ')
-                        final = transaction_search(sort_to_rub, user_7)
+                        final = sorted(sor.get("id"), key=lambda item: item[1])
                     elif user_6.lower() == 'нет':
                         final = sort_to_rub
         elif user_5.lower() == 'нет':
             sort_to_rub = modul_transaction
-            if user_6.lower() == 'да':
-                user_7 = input('Напишите слово для сортировки: ')
-                final = transaction_search(sort_to_rub, user_7)
-            elif user_6.lower() == 'нет':
-                final = sort_to_rub
+            for sor in sort_to_rub:
+                if user_6.lower() == 'да':
+                    final = sorted(sor.get("id"), key=lambda item: item[1])
+                elif user_6.lower() == 'нет':
+                    final = sort_to_rub
     return final
 
 
@@ -148,10 +141,13 @@ def result_main(final: list[dict]) -> Any:
         return []
     else:
         for fina in final:
-            a = get_date(fina["date"])
-            b = fina["description"]
-            c = mask_account_card(fina["from"])
-            d = mask_account_card(fina["to"])
-            e = fina["amount"]
-            f = fina["operationAmount"]["currency"]["code"]
-        return [a, b, c, d, e, f]
+            a = get_date(fina.get("date"))
+            b = fina.get("description")
+            d = mask_account_card(fina.get("to"))
+            e = fina.get("operationAmount").get("amount")
+            f = fina.get("operationAmount").get("currency").get("code")
+            if b != "Открытие вклада":
+                c = mask_account_card(fina.get("from"))
+                return [a, b, c, d, e, f]
+            else:
+                return [a, b, d, e, f]
