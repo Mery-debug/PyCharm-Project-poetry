@@ -1,99 +1,157 @@
+import os
+
+from src.financialcsvxlsx import csv_reader, xlsx_reader
 from src.masks import get_mask_account, get_mask_card_number
 from typing import Union, Any
 
-from src.processing import sort_by_date
+from src.processing import sort_by_date, filter_by_state
+from src.transaction_mod import transaction_search
+from src.utils import load_transactions
+from src.widget import get_date, mask_account_card
 
 
-def number() -> Union[str, int]:
+def number() -> list[dict]:
     """Функция выбора файла"""
-    n = 0
+    modul = 0
     while True:
         user = input('''Программа: Привет! Добро пожаловать в программу работы
             с банковскими транзакциями. 
             Выберите необходимый пункт меню:
             1. Получить информацию о транзакциях из JSON-файла
             2. Получить информацию о транзакциях из CSV-файла
-            3. Получить информацию о транзакциях из XLSX-файла''')
+            3. Получить информацию о транзакциях из XLSX-файла\n''')
         if user == '1':
-            n = 'Для обработки выбран JSON-файл.'
+            print('Для обработки выбран JSON-файл.')
+            modul = load_transactions(os.path.join(os.path.abspath(__file__), "../../data/operations.json"))
             break
         elif user == '2':
-            n = 'Для обработки выбран CSV-файл.'
+            print('Для обработки выбран CSV-файл.')
+            modul = csv_reader(os.path.join(os.path.abspath(__file__), "../../data/transactions.csv"))
             break
         elif user == '3':
-            n = 'Для обработки выбран XLSX-файл.'
+            print('Для обработки выбран XLSX-файл.')
+            modul = xlsx_reader(os.path.join(os.path.abspath(__file__), "../../data/transactions_excel.xlsx"))
             break
         else:
             print('Такого варианта не предусмотренно, попробуйте выбрать еще раз.')
             continue
-    return n
+    return modul
 
 
-def status() -> str:
+def status(modul: list[dict]) -> list[dict]:
     """Функция выбора статуса"""
     a = 1
     while a > 0:
-        user_2 = input('Выбери статус: EXECUTED, CANCELED, PENDING')
+        user_2 = input('Выбери статус: EXECUTED, CANCELED, PENDING\n')
         if user_2.upper() == 'EXECUTED':
-            s = 'Операции отфильтрованы по статусу: EXECUTED'
+            print('Операции отфильтрованы по статусу: EXECUTED')
             a -= 1
+            modul_transaction = filter_by_state(modul, state='EXECUTED')
         elif user_2.upper() == 'CANCELED':
-            s = f'Операции отфильтрованы по статусу: CANCELED'
+            print('Операции отфильтрованы по статусу: CANCELED')
             a -= 1
+            modul_transaction = filter_by_state(modul, state='CANCELED')
         elif user_2.upper() == 'PENDING':
-            s = f'Операции отфильтрованы по статусу: PENDING'
+            print('Операции отфильтрованы по статусу: PENDING')
             a -= 1
+            modul_transaction = filter_by_state(modul, state='PENDING')
         else:
             print(f'Статус операции {user_2} недоступен')
             a += 1
             continue
-        return s
+        return modul_transaction
 
 
-def ad_questions() -> list:
+def ad_questions(modul_transaction: list[dict]) -> list[dict]:
     """Функция, задающая дополнительные вопросы"""
-    a = 0
-    b = 0
-    c = 0
-    d = 0
+    final = [{}]
     user_3 = input('Отсортировать операции по дате? Да/Нет')
     user_4 = input('Отсортировать по возрастанию или по убыванию?')
     user_5 = input('Выводить только рублевые транзакции? Да/Нет')
     user_6 = input('Отфильтровать список транзакций по определенному слову в описании? Да/Нет')
     if user_3.lower() == 'да':
-        a = 1
+        if user_4.lower() == 'по возрастанию':
+            sort_to_date = []
+            for modul_tr in modul_transaction:
+                sort = sort_by_date(modul_tr['date'], sorte=True)
+                for sor in sort:
+                    sort_to_date.append(sor)
+                    if user_5.lower() == 'да':
+                        sort_to_rub = []
+                        for sort in sort_to_date:
+                            if sort['operationAmount']['currency']['code'] == "RUB":
+                                sort_to_rub.append(sort)
+                                if user_6.lower() == 'да':
+                                    user_7 = input('Напишите слово для сортировки: ')
+                                    final = transaction_search(sort_to_rub, user_7)
+                                elif user_6.lower() == 'нет':
+                                    final = sort_to_rub
+                    elif user_5.lower() == 'нет':
+                        sort_to_rub = sort_to_date
+                        if user_6.lower() == 'да':
+                            user_7 = input('Напишите слово для сортировки: ')
+                            final = transaction_search(sort_to_rub, user_7)
+                        elif user_6.lower() == 'нет':
+                            final = sort_to_rub
+        elif user_4.lower() == 'по убыванию':
+            sort_to_date = []
+            for modul_tr in modul_transaction:
+                sort = sort_by_date(modul_tr['date'], sorte=False)
+                for sor in sort:
+                    sort_to_date.append(sor)
+                    if user_5.lower() == 'да':
+                        sort_to_rub = []
+                        for sort in sort_to_date:
+                            if sort['operationAmount']['currency']['code'] == "RUB":
+                                sort_to_rub.append(sort)
+                                if user_6.lower() == 'да':
+                                    user_7 = input('Напишите слово для сортировки: ')
+                                    final = transaction_search(sort_to_rub, user_7)
+                                elif user_6.lower() == 'нет':
+                                    final = sort_to_rub
+                    elif user_5.lower() == 'нет':
+                        sort_to_rub = sort_to_date
+                        if user_6.lower() == 'да':
+                            user_7 = input('Напишите слово для сортировки: ')
+                            final = transaction_search(sort_to_rub, user_7)
+                        elif user_6.lower() == 'нет':
+                            final = sort_to_rub
     elif user_3.lower() == 'нет':
-        a = 2
-    if user_4.lower() == 'по возрастанию':
-        b = 1
-    elif user_4.lower() == 'по убыванию':
-        b = 2
-    if user_5.lower() == 'да':
-        c = 1
-    elif user_5.lower() == 'нет':
-        c = 2
-    if user_6.lower() == 'да':
-        d = 1
-        user_7 = input('Напишите слово для сортировки: ')
-        return [a, b, c, d, user_7]
-    elif user_6.lower() == 'нет':
-        d = 2
-    return [a, b, c, d]
+        if user_5.lower() == 'да':
+            sort_to_rub = []
+            for modul_tr in modul_transaction:
+                if modul_tr['operationAmount']['currency']['code'] == "RUB":
+                    sort_to_rub.append(modul_tr)
+                    if user_6.lower() == 'да':
+                        user_7 = input('Напишите слово для сортировки: ')
+                        final = transaction_search(sort_to_rub, user_7)
+                    elif user_6.lower() == 'нет':
+                        final = sort_to_rub
+        elif user_5.lower() == 'нет':
+            sort_to_rub = modul_transaction
+            if user_6.lower() == 'да':
+                user_7 = input('Напишите слово для сортировки: ')
+                final = transaction_search(sort_to_rub, user_7)
+            elif user_6.lower() == 'нет':
+                final = sort_to_rub
+    return final
 
 
-def choice_of_sort(modul_transaction: list[dict], sorte=True) -> list[dict]:
-    sort_to_date = []
-    for modul_tr in modul_transaction:
-        sort = sort_by_date(modul_tr['date'], sorte)
-        for sor in sort:
-            sort_to_date.append(sor)
-    return sort_to_date
-
-
-def choice_of_currency(sort_to_date: list[dict], currency: str) -> list[dict]:
-    sort_to_rub = []
-    for sort in sort_to_date:
-        if sort['operationAmount']['currency']['code'] == currency:
-            sort_to_rub.append(sort)
-    return sort_to_rub
-
+def result_main(final: list[dict]) -> Any:
+    a = 0
+    b = 0
+    c = 0
+    d = 0
+    e = 0
+    f = 0
+    if not final:
+        return []
+    else:
+        for fina in final:
+            a = get_date(fina["date"])
+            b = fina["description"]
+            c = mask_account_card(fina["from"])
+            d = mask_account_card(fina["to"])
+            e = fina["amount"]
+            f = fina["operationAmount"]["currency"]["code"]
+        return [a, b, c, d, e, f]
