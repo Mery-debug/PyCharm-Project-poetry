@@ -1,18 +1,32 @@
-# from src.masks import get_mask_card_number, get_mask_account
-# from src.save_to_file import save_to_file
-# import os
-#
-#
-# def main():
-#     number = input("Введите номер карты: ")
-#     file_path_2 = input("Введите путь к файл, в который хотите сохранять логи: ")
-#     account_number = input("Введите номер счета: ")
-#     file_path = os.path.join(os.path.abspath(__file__), file_path_2)
-#     get_mask_card_number(number)
-#     get_mask_account(account_number)
-#     save_to_file(number, file_path)
+from src.Users import number, status, ad_questions,
+from src.utils import load_transactions
+import os
+from src.transaction_mod import transaction_search
+
+def main():
+    m = number()
+    s = status()
+    if 'json'.upper() in m:
+        i = load_transactions(os.path.join(os.path.abspath(__file__), "/data/operations.json")
+        if 'EXECUTED' in i:
+            o = transaction_search(i, 'EXECUTED')
+
+
+
+
 
 
 if __name__ == '__main__':
-    main()
+
+    print(number())
+    print(status())
+
+
+
+
+
+
+
+
+
 

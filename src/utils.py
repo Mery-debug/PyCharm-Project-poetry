@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from typing import Any, Union
+from typing import Union
 
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
@@ -32,5 +32,5 @@ def load_transactions(file_path: str) -> Union[dict, list]:
             return []
 
 
-if __name__ == "__main__":
-    print(load_transactions(os.path.join(os.path.abspath(__file__), "../../data/operations.json")))
+# if __name__ == "__main__":
+# print(load_transactions(os.path.join(os.path.abspath(__file__), "../../data/operations.json")))
