@@ -16,7 +16,7 @@ def mask_account_card(data: Union[str]) -> str:
             return f"{data[0:-16]}{get_mask_card_number(data[-16:])}"
 
 
-def get_date(date: Union[str]) -> str:
+def get_date(date: str) -> str:
     """Function for restructuring date"""
     if date == " " or date == "":
         return "Некорректная дата"

@@ -81,13 +81,13 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
                         if sort['operationAmount']['currency']['code'] == "RUB":
                             sort_to_rub.append(sort)
                     if user_6.lower() == 'да':
-                        final = sorted(sort.get("id"), key=lambda item: item[1])
+                        final = sort_to_rub
                     elif user_6.lower() == 'нет':
                         final = sort_to_rub
                 elif user_5.lower() == 'нет':
                     sort_to_rub = sort_to_date
                     if user_6.lower() == 'да':
-                        final = sorted(sort.get("id"), key=lambda item: item[1])
+                        final = sort_to_rub
                     elif user_6.lower() == 'нет':
                         final = sort_to_rub
         elif user_4.lower() == 'по убыванию':
@@ -101,13 +101,13 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
                         if sort['operationAmount']['currency']['code'] == "RUB":
                             sort_to_rub.append(sort)
                             if user_6.lower() == 'да':
-                                final = sorted(sort.get("id"), key=lambda item: item[1])
+                                final = sort_to_rub
                             elif user_6.lower() == 'нет':
                                 final = sort_to_rub
                 elif user_5.lower() == 'нет':
                     sort_to_rub = sort_to_date
                     if user_6.lower() == 'да':
-                        final = sorted(sort.get("id"), key=lambda item: item[1])
+                        final = sort_to_rub
                     elif user_6.lower() == 'нет':
                         final = sort_to_rub
     elif user_3.lower() == 'нет':
@@ -117,16 +117,15 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
                 if sor['operationAmount']['currency']['code'] == "RUB":
                     sort_to_rub.append(sor)
                     if user_6.lower() == 'да':
-                        final = sorted(sor.get("id"), key=lambda item: item[1])
+                        final = sort_to_rub
                     elif user_6.lower() == 'нет':
                         final = sort_to_rub
         elif user_5.lower() == 'нет':
             sort_to_rub = modul_transaction
-            for sor in sort_to_rub:
-                if user_6.lower() == 'да':
-                    final = sorted(sor.get("id"), key=lambda item: item[1])
-                elif user_6.lower() == 'нет':
-                    final = sort_to_rub
+            if user_6.lower() == 'да':
+                final = sort_to_rub
+            elif user_6.lower() == 'нет':
+                final = sort_to_rub
     return final
 
 
