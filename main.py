@@ -1,14 +1,14 @@
 from src.Users import number, status, ad_questions, result_main
 
 
-def main():
+def main() -> str:
     modul = number()
     print(modul)
     modul_transaction = status(modul)
     print(modul_transaction)
     final = ad_questions(modul_transaction)
     if not final:
-        return []
+        return 'Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
     else:
         a = result_main(final)
         if len(final) == 0:

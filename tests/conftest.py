@@ -685,7 +685,7 @@ def trial() -> list:
         },
         {
             "id": 260972664,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2018-01-23T01:48:30.477053",
             "operationAmount": {"amount": "2974.30", "currency": {"name": "USD", "code": "USD"}},
             "description": "Перевод с карты на карту",
@@ -738,7 +738,7 @@ def trial() -> list:
         },
         {
             "id": 100392079,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2019-03-03T03:13:18.622393",
             "operationAmount": {"amount": "44493.45", "currency": {"name": "USD", "code": "USD"}},
             "description": "Перевод с карты на счет",
@@ -747,7 +747,7 @@ def trial() -> list:
         },
         {
             "id": 51314762,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2018-08-25T02:58:18.764678",
             "operationAmount": {"amount": "52245.30", "currency": {"name": "USD", "code": "USD"}},
             "description": "Перевод с карты на карту",
@@ -783,7 +783,7 @@ def trial() -> list:
         },
         {
             "id": 360577236,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2019-09-07T07:20:13.889610",
             "operationAmount": {"amount": "18536.73", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод с карты на карту",
@@ -923,7 +923,6 @@ def trial() -> list:
             "from": "Счет 59956820797131895975",
             "to": "Счет 43475624104328495820",
         },
-        {},
         {
             "id": 509552992,
             "state": "EXECUTED",
@@ -997,7 +996,7 @@ def trial() -> list:
         },
         {
             "id": 86608620,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2019-08-16T04:23:41.621065",
             "operationAmount": {"amount": "6004.00", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод с карты на счет",
@@ -1051,7 +1050,7 @@ def trial() -> list:
         },
         {
             "id": 121646999,
-            "state": "CANCELED",
+            "state": "PENDING",
             "date": "2018-06-08T16:14:59.936274",
             "operationAmount": {"amount": "91121.62", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод организации",
@@ -1105,7 +1104,7 @@ def trial() -> list:
         },
         {
             "id": 179194306,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2019-05-19T12:51:49.023880",
             "operationAmount": {"amount": "6381.58", "currency": {"name": "USD", "code": "USD"}},
             "description": "Перевод организации",
@@ -1123,7 +1122,7 @@ def trial() -> list:
         },
         {
             "id": 921286598,
-            "state": "EXECUTED",
+            "state": "PENDING",
             "date": "2018-03-09T23:57:37.537412",
             "operationAmount": {"amount": "25780.71", "currency": {"name": "руб.", "code": "RUB"}},
             "description": "Перевод организации",

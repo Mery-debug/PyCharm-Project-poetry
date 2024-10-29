@@ -6,7 +6,7 @@ def test_load_transactions(final_path: str) -> None:
     assert load_transactions(final_path) == []
 
 
-def test_load_trans(final_p: str, trial: list) -> None:
+def test_load_trans(final_p: str, trial: list[dict]) -> None:
     """Тест при правильной работе функции"""
     assert load_transactions(final_p) == trial
 

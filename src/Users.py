@@ -1,11 +1,7 @@
 import os
-
 from src.financialcsvxlsx import csv_reader, xlsx_reader
-from src.masks import get_mask_account, get_mask_card_number
-from typing import Union, Any
-
+from typing import Any
 from src.processing import sort_by_date, filter_by_state
-from src.transaction_mod import transaction_search
 from src.utils import load_transactions
 from src.widget import get_date, mask_account_card
 
