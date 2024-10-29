@@ -31,7 +31,3 @@ def load_transactions(file_path: str) -> Union[dict, list]:
         except json.JSONDecodeError as ex:
             # logger.error(f"Ошибка {ex}")
             return []
-
-
-# if __name__ == "__main__":
-# print(load_transactions(os.path.join(os.path.abspath(__file__), "../../data/operations.json")))

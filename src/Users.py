@@ -1,6 +1,8 @@
 from src.masks import get_mask_account, get_mask_card_number
 from typing import Union, Any
 
+from src.processing import sort_by_date
+
 
 def number() -> Union[str, int]:
     """Функция выбора файла"""
@@ -77,3 +79,21 @@ def ad_questions() -> list:
     elif user_6.lower() == 'нет':
         d = 2
     return [a, b, c, d]
+
+
+def choice_of_sort(modul_transaction: list[dict], sorte=True) -> list[dict]:
+    sort_to_date = []
+    for modul_tr in modul_transaction:
+        sort = sort_by_date(modul_tr['date'], sorte)
+        for sor in sort:
+            sort_to_date.append(sor)
+    return sort_to_date
+
+
+def choice_of_currency(sort_to_date: list[dict], currency: str) -> list[dict]:
+    sort_to_rub = []
+    for sort in sort_to_date:
+        if sort['operationAmount']['currency']['code'] == currency:
+            sort_to_rub.append(sort)
+    return sort_to_rub
+
