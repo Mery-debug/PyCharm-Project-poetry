@@ -71,7 +71,8 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
     if user_3.lower() == "да":
         if user_4.lower() == "по возрастанию":
             sort_to_date = []
-            sort = sort_by_date(modul_transaction, sorte=True)
+            sort = sort_by_date(modul_transaction, sorte=False)
+            print(sort)
             for sor in sort:
                 sort_to_date.append(sor)
                 if user_5.lower() == "да":
@@ -91,7 +92,7 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
                         final = sort_to_rub
         elif user_4.lower() == "по убыванию":
             sort_to_date = []
-            sort = sort_by_date(modul_transaction, sorte=False)
+            sort = sort_by_date(modul_transaction, sorte=True)
             for sor in sort:
                 sort_to_date.append(sor)
                 if user_5.lower() == "да":
@@ -126,27 +127,3 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
             elif user_6.lower() == "нет":
                 final = sort_to_rub
     return final
-
-
-def result_main(final: list[dict[Any, Any]]) -> Any:
-    """Функция для упрощения вывода ответа"""
-    a = 0
-    b = 0
-    c = 0
-    d = 0
-    e = 0
-    f = 0
-    if not final:
-        return []
-    else:
-        for fina in final:
-            a = get_date(fina.get("date"))
-            b = fina.get("description")
-            d = mask_account_card(fina.get("to"))
-            e = fina.get("operationAmount").get("amount")
-            f = fina.get("operationAmount").get("currency").get("code")
-            if b != "Открытие вклада":
-                c = mask_account_card(fina.get("from"))
-                return [a, b, c, d, e, f]
-            else:
-                return [a, b, d, e, f]

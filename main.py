@@ -1,7 +1,10 @@
-from src.Users import number, status, ad_questions, result_main
+from typing import Any
+
+from src.Users import number, status, ad_questions
+from src.widget import get_date, mask_account_card
 
 
-def main() -> str:
+def main() -> Any:
     """Главная функция проекта"""
     modul = number()
     print(modul)
@@ -11,20 +14,21 @@ def main() -> str:
     if not final:
         return 'Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
     else:
-        a = result_main(final)
+        if not final:
+            return []
         if len(final) == 0:
             return 'Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
         else:
             print('Распечатываю итоговый список транзакций...')
             print(f'Всего банковских операций в выборке: {len(final)}')
-            for i in range(len(final)):
-                print(f'{a[0]} {a[1]}')
-                if a[1] == "Открытие вклада":
-                    print(f'{a[2]}')
-                    print(f'Сумма: {a[3]} {a[4]}\n')
+            for fina in final:
+                print(f'{get_date(fina.get("date"))} {fina.get("description")}')
+                if fina.get("description") == "Открытие вклада":
+                    print(f'{mask_account_card(fina.get("to"))}')
+                    print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
                 else:
-                    print(f'{a[2]} -> {a[3]}')
-                    print(f'Сумма: {a[4]} {a[5]}\n')
+                    print(f'{mask_account_card(fina.get("from"))} -> {mask_account_card(fina.get("to"))}')
+                    print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
             return "конец"
 
 

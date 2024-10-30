@@ -3,12 +3,10 @@ from typing import Union
 from src.masks import get_mask_account, get_mask_card_number
 
 
-def mask_account_card(data: Union[str]) -> str:
+def mask_account_card(data: str) -> str:
     """Function for masking cart or bank account"""
     if data == "":
         return "Ошибка ввода, мало символов"
-    elif " " not in data:
-        return "Не верный формат ввода"
     else:
         if "Счет" in data:
             return f"{data[0:-20]}{get_mask_account(data[-20:])}"
