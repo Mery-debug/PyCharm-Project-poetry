@@ -4,14 +4,15 @@ from typing import Any
 
 
 def transaction_search(transactions: list[dict], search_str: str) -> list[dict]:
-    final_lst = []
-    for transaction in transactions:
+  """Функция поиска в строке по слову"""
+  final_lst = []
+  for transaction in transactions:
 
-        r'.{1-1000} "description": {search_str} *'
-        final_lst = re.findall(search_str, transaction.get("description"))
 
-        # final_lst.append(transaction)
-    return final_lst
+     final_lst = re.findall(search_str, transaction.get("description"))
+
+     final_lst.append(transaction)
+  return final_lst
 
 
 print(transaction_search([
@@ -75,7 +76,9 @@ print(transaction_search([
     "to": "Счет 41421565395219882431"
   }], "Перевод организации"))
 
+
 def find_description(transactions: list[dict], descriptions: [list]) -> Any:
+  """Функция выводящая словарь, в котором ключи - это описания операций, а значения - количество операций в словаре"""
     lst = []
     count = 0
     for transaction in transactions:
