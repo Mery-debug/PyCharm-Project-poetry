@@ -2,6 +2,7 @@ from src.Users import number, status, ad_questions, result_main
 
 
 def main() -> str:
+    """Главная функция проекта"""
     modul = number()
     print(modul)
     modul_transaction = status(modul)

@@ -1,5 +1,6 @@
-from src.transaction_mod import transaction_search, find_description
 from typing import Any
+
+from src.transaction_mod import find_description, transaction_search
 
 
 def test_transaction_search_1(trial: list[dict], search_str: str, search_result: list[dict]) -> None:

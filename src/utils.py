@@ -1,5 +1,5 @@
 import json
-import logging
+# import logging
 import os
 from typing import Union
 
@@ -28,8 +28,9 @@ def load_transactions(file_path: str) -> Union[dict, list]:
             else:
                 # logger.error("Полученный тип не list")
                 return []
-        except json.JSONDecodeError as ex:
+        except json.JSONDecodeError:
             # logger.error(f"Ошибка {ex}")
             return []
+
 
 # print(load_transactions(os.path.join(os.path.abspath(__file__), "../../data/operations.json")))
