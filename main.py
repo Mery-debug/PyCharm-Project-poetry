@@ -14,22 +14,17 @@ def main() -> Any:
     if not final:
         return 'Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
     else:
-        if not final:
-            return []
-        if len(final) == 0:
-            return 'Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
-        else:
-            print('Распечатываю итоговый список транзакций...')
-            print(f'Всего банковских операций в выборке: {len(final)}')
-            for fina in final:
-                print(f'{get_date(fina.get("date"))} {fina.get("description")}')
-                if fina.get("description") == "Открытие вклада":
-                    print(f'{mask_account_card(fina.get("to"))}')
-                    print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
-                else:
-                    print(f'{mask_account_card(fina.get("from"))} -> {mask_account_card(fina.get("to"))}')
-                    print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
-            return "конец"
+        print('Распечатываю итоговый список транзакций...')
+        print(f'Всего банковских операций в выборке: {len(final)}')
+        for fina in final:
+            print(f'{get_date(fina.get("date"))} {fina.get("description")}')
+            if fina.get("description") == "Открытие вклада":
+                print(f'{mask_account_card(fina.get("to"))}')
+                print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
+            else:
+                print(f'{mask_account_card(fina.get("from"))} -> {mask_account_card(fina.get("to"))}')
+                print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
+        return "конец"
 
 
 if __name__ == '__main__':

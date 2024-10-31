@@ -1,10 +1,10 @@
 import os
-from typing import Any
+from typing import Any, Union
 
 from src.financialcsvxlsx import csv_reader, xlsx_reader
 from src.processing import filter_by_state, sort_by_date
+from src.transaction_mod import transaction_search
 from src.utils import load_transactions
-from src.widget import get_date, mask_account_card
 
 
 def number() -> list[dict]:
@@ -61,33 +61,37 @@ def status(modul: list[dict]) -> list[dict]:
             continue
 
 
-def ad_questions(modul_transaction: list[dict]) -> list[dict]:
+def ad_questions(modul_transaction: list[dict]) -> Union[list[dict], Any]:
     """Функция, задающая дополнительные вопросы"""
     final = [{}]
     user_3 = input("Отсортировать операции по дате? Да/Нет").lower()
     user_4 = input("Отсортировать по возрастанию или по убыванию?").lower()
     user_5 = input("Выводить только рублевые транзакции? Да/Нет").lower()
     user_6 = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет").lower()
+    user_7 = input("Выберите слово, по которому производится сортировка: ").title()
     if user_3 == "да":
         if user_4 == "по возрастанию":
             sort_to_date = []
             sort = sort_by_date(modul_transaction, sorte=False)
-            print(sort)
             for sor in sort:
                 sort_to_date.append(sor)
-                if user_5 == "да":
-                    sort_to_rub = []
-                    for sort in sort_to_date:
-                        if sort["operationAmount"]["currency"]["code"] == "RUB":
-                            sort_to_rub.append(sort)
-                    if user_6 == "да":
-                        final = sort_to_rub
-                    elif user_6 == "нет":
-                        final = sort_to_rub
+            if user_5 == "да":
+                sort_to_rub = []
+                for sort in sort_to_date:
+                    if sort["operationAmount"]["currency"]["code"] == "RUB":
+                        sort_to_rub.append(sort)
+                if user_6 == "да":
+                    final = transaction_search(sort_to_rub, user_7)
+                    if not final or final == []:
+                        return "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
+                elif user_6 == "нет":
+                    final = sort_to_rub
                 elif user_5 == "нет":
                     sort_to_rub = sort_to_date
                     if user_6 == "да":
-                        final = sort_to_rub
+                        final = transaction_search(sort_to_rub, user_7)
+                        if not final or final == []:
+                            return "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
                     elif user_6 == "нет":
                         final = sort_to_rub
         elif user_4 == "по убыванию":
@@ -101,13 +105,17 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
                         if sort["operationAmount"]["currency"]["code"] == "RUB":
                             sort_to_rub.append(sort)
                             if user_6 == "да":
-                                final = sort_to_rub
+                                final = transaction_search(sort_to_rub, user_7)
+                                if not final or final == []:
+                                    return "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
                             elif user_6 == "нет":
                                 final = sort_to_rub
                 elif user_5 == "нет":
                     sort_to_rub = sort_to_date
                     if user_6 == "да":
-                        final = sort_to_rub
+                        final = transaction_search(sort_to_rub, user_7)
+                        if not final or final == []:
+                            return "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
                     elif user_6 == "нет":
                         final = sort_to_rub
     elif user_3 == "нет":
@@ -117,13 +125,17 @@ def ad_questions(modul_transaction: list[dict]) -> list[dict]:
                 if sor["operationAmount"]["currency"]["code"] == "RUB":
                     sort_to_rub.append(sor)
                     if user_6 == "да":
-                        final = sort_to_rub
+                        final = transaction_search(sort_to_rub, user_7)
+                        if not final or final == []:
+                            return "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
                     elif user_6 == "нет":
                         final = sort_to_rub
         elif user_5 == "нет":
             sort_to_rub = modul_transaction
             if user_6 == "да":
-                final = sort_to_rub
+                final = transaction_search(sort_to_rub, user_7)
+                if not final or final == []:
+                    return "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
             elif user_6 == "нет":
                 final = sort_to_rub
     return final
