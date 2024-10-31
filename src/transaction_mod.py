@@ -7,12 +7,10 @@ def transaction_search(transactions: list[dict], search_str: str) -> list[dict]:
   """Функция поиска в строке по слову"""
   final_lst = []
   for transaction in transactions:
-
-
-     final_lst = re.findall(search_str, transaction.get("description"))
-
-     final_lst.append(transaction)
-  return final_lst
+    final = re.findall(search_str, transaction.get("description"))
+    if final:
+        final_lst.append(transaction)
+    return final_lst
 
 
 print(transaction_search([
