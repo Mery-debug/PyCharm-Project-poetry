@@ -1,4 +1,4 @@
-from typing import Union, Any
+from typing import Any, Union
 
 
 def filter_by_currency(transactions: list[dict], val: Union[str] = "USD") -> Any:

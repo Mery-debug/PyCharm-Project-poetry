@@ -1,15 +1,16 @@
 import csv
+from typing import Any, Collection
+
 import pandas as pd
-import os
 
 # file_name = (os.path.abspath(__name__), '../../data/transactions.csv')
 
 
-def csv_reader(file_name: [str] = "../data/transactions.csv") -> list[dict]:
+def csv_reader(file_name: str = "../data/transactions.csv") -> list[dict[str, dict[str, Collection[str]] | str | Any]]:
     """function, which read csv files with lib csv"""
     transactions = []
-    with open(file_name, encoding='utf-8') as csv_file:
-        reader_dicts = csv.DictReader(csv_file, delimiter=';')
+    with open(file_name, encoding="utf-8") as csv_file:
+        reader_dicts = csv.DictReader(csv_file, delimiter=";")
         for row in reader_dicts:
             transactions.append(
                 {
@@ -31,7 +32,7 @@ def csv_reader(file_name: [str] = "../data/transactions.csv") -> list[dict]:
         return transactions
 
 
-def xlsx_reader(file_name: [str] = "../data/transactions_excel.xlsx") -> list[dict]:
+def xlsx_reader(file_name: str = "../data/transactions_excel.xlsx") -> list[dict[str, Any]]:
     """function which read xlsx files with lib pandas"""
     transactions = []
     transaction = pd.read_excel(file_name)

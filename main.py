@@ -1,18 +1,31 @@
-# from src.masks import get_mask_card_number, get_mask_account
-# from src.save_to_file import save_to_file
-# import os
-#
-#
-# def main():
-#     number = input("Введите номер карты: ")
-#     file_path_2 = input("Введите путь к файл, в который хотите сохранять логи: ")
-#     account_number = input("Введите номер счета: ")
-#     file_path = os.path.join(os.path.abspath(__file__), file_path_2)
-#     get_mask_card_number(number)
-#     get_mask_account(account_number)
-#     save_to_file(number, file_path)
+from typing import Any
+
+from src.Users import number, status, ad_questions
+from src.widget import get_date, mask_account_card
+
+
+def main() -> Any:
+    """Главная функция проекта"""
+    modul = number()
+    print(modul)
+    modul_transaction = status(modul)
+    print(modul_transaction)
+    final = ad_questions(modul_transaction)
+    if not final:
+        return 'Не найдено ни одной транзакции, подходящей под ваши условия фильтрации'
+    else:
+        print('Распечатываю итоговый список транзакций...')
+        print(f'Всего банковских операций в выборке: {len(final)}')
+        for fina in final:
+            print(f'{get_date(fina.get("date"))} {fina.get("description")}')
+            if fina.get("description") == "Открытие вклада":
+                print(f'{mask_account_card(fina.get("to"))}')
+                print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
+            else:
+                print(f'{mask_account_card(fina.get("from"))} -> {mask_account_card(fina.get("to"))}')
+                print(f'Сумма: {fina.get("operationAmount").get("amount")} {fina.get("operationAmount").get("currency").get("code")}\n')
+        return "конец"
 
 
 if __name__ == '__main__':
-    main()
-
+    print(main())

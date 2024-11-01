@@ -1,17 +1,16 @@
-from typing import Union
+from typing import Any
 
 
-def filter_by_state(list_data: Union[list[dict[str, int]]], state: Union[str] = "EXECUTED") -> list[dict]:
+def filter_by_state(list_data: list[dict], state: str = "EXECUTED") -> list[dict]:
     """Function for search dictionary with some 'state'"""
     list_new_data = []
     for lis in list_data:
-        if lis["state"] == state:
+        if lis.get("state") == state:
             list_new_data.append(lis)
     return list_new_data
 
 
-def sort_by_date(list_date: Union[list[dict]], sort: Union[bool] = True) -> list[dict]:
+def sort_by_date(list_date: list[dict[Any, Any]], sorte: bool = True) -> list[dict]:
     """Function for sorting date"""
-    for lis in list_date:
-        list_date.sort(key=lambda x: x["date"], reverse=sort)
+    list_date.sort(key=lambda x: x.get("date"), reverse=sorte)
     return list_date
